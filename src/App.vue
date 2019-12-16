@@ -13,9 +13,12 @@
       const result = await reqAddress('116.36867',40.10038)
     }, */
 
+
 // 通知action获取异步address
     async mounted(){
       this.$store.dispatch('getAddress')
+      this.$store.dispatch('autoLogin')
+      
     },
     components: {
       FooterGuide
