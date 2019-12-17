@@ -67,7 +67,7 @@
           <i class="iconfont icon-vip"></i>
         </span>
         <div class="my_order_div">
-          <span>硅谷外卖会员卡</span>
+          <span>随叫随到外卖会员卡</span>
           <span class="my_order_icon">
             <i class="iconfont icon-jiantou1"></i>
           </span>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { Indicator } from 'mint-ui'
+import { Indicator, Toast, MessageBox } from 'mint-ui'
 import store from "../vuex/store";
 import router from "@/router";
 

@@ -9,6 +9,8 @@ import Star from "./components/Star/Star.vue";
 import store from "./vuex/store";
 import './validate'
 import * as API from '@/api'
+import i18n from './i18n'
+import './mock/mock-server'
 
 Vue.prototype.$API = API
 
@@ -19,5 +21,6 @@ Vue.component(Button.name, Button)  //mt-button
 new Vue({
   render:h=>h(App),
   router,
-  store,
+  i18n,
+  store
 }).$mount('#app')
