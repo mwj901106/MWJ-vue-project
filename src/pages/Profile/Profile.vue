@@ -99,7 +99,11 @@
   import { MessageBox } from "mint-ui";
   export default {
     computed: {
-      ...mapState(['user'])
+      // ...mapState(['user'])
+      ...mapState({
+        // 第一个user是模块名称,第二个是管理数据的名
+        user:state => state.user.user
+      })
     },
     methods:{
       logout(){

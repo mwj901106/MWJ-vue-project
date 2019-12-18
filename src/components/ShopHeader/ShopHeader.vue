@@ -125,7 +125,10 @@
     },
 
     computed: {
-      ...mapState(['info'])
+      // ...mapState(['info'])
+      ...mapState({
+        info: state => state.shop.info
+      })
     }
   }
 </script>

@@ -62,7 +62,10 @@
       }
     },
     computed: {
-      ...mapState(['goods']),
+      // ...mapState(['goods']),
+      ...mapState({
+        goods: state => state.shop.goods
+      }),
       currentIndex () {
         const {scrollY, tops} = this
         const index = tops.findIndex((top, index) => scrollY>=top && scrollY<tops[index+1])
