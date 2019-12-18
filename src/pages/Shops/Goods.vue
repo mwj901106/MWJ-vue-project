@@ -18,7 +18,8 @@
           <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index">
+              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" 
+              :key="index" @click="showFood(food)">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
@@ -41,19 +42,23 @@
           </li>
         </ul>
       </div>
+
     </div>
+    <Food :food="food" ref="food"/>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
   import { mapState } from 'vuex';
+  import Food from '@/components/Food/Food'
  
   export default {
     data () {
       return {
         scrollY: 0,
-        tops: []
+        tops: [],
+        food:{}
       }
     },
     computed: {
@@ -109,7 +114,14 @@
         this.scrollY = top
         this.rightScroll.scrollTo(0,-top,300)
 
-      }
+      },
+
+      showFood (food) {
+        // 更新数据
+        this.food = food
+        // 显示food组件界面
+        this.$refs.food.toggleShow()
+      } 
 
     },
     watch: {
@@ -119,6 +131,10 @@
           this._initTops()
         })
       }
+    },
+
+    components: {
+      Food
     }
   }
 </script>
