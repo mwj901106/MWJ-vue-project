@@ -23,6 +23,8 @@ import {
   RECEIVE_INFO,
   RECEIVE_RATINGS,
   RECEIVE_GOODS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
 } from './mutation-types'
 
 
@@ -140,4 +142,12 @@ export default {
       typeof cb==='function' && cb()
     }
   },
+
+  updateFoodCount({commit},{isAdd,food}){
+    if(isAdd){
+      commit(ADD_FOOD_COUNT,{food})
+    }else{
+      commit(REDUCE_FOOD_COUNT,{food})
+    }
+  }
 }

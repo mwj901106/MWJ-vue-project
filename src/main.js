@@ -7,6 +7,7 @@ import Header from "./components/Header/Header.vue";
 import router from "./router";
 import Star from "./components/Star/Star.vue";
 import store from "./vuex/store";
+import CartControl from './components/CartControl/CartControl.vue' 
 import './validate'
 import * as API from '@/api'
 import i18n from './i18n'
@@ -16,6 +17,7 @@ Vue.prototype.$API = API
 
 Vue.component('Header', Header)
 Vue.component('Star', Star)
+Vue.component('CartControl', CartControl)
 Vue.component(Button.name, Button)  //mt-button
 
 new Vue({

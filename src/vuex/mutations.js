@@ -13,7 +13,10 @@ import {
   RECEIVE_INFO,
   RECEIVE_RATINGS,
   RECEIVE_GOODS,
+  ADD_FOOD_COUNT,
+  REDUCE_FOOD_COUNT
 } from './mutation-types'
+import Vue from "vue";
 
 export default {
   [RECEIVE_ADDRESS] (state, address) {
@@ -50,4 +53,16 @@ export default {
   [RECEIVE_GOODS](state, {goods}) {
     state.goods = goods
   },
+  [ADD_FOOD_COUNT](state,{food}){
+    if(food.count){
+      food.count++
+    }else{
+      Vue.set(food,'count',1)
+    }
+  },
+  [REDUCE_FOOD_COUNT](state,{food}){
+    if(food.count>0){
+      food.count--
+    }
+  }
 }
