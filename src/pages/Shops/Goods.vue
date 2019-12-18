@@ -2,8 +2,9 @@
   <div>
     <div class="goods">
       <div class="menu-wrapper" ref="left">
-        <ul>
-          <li class="menu-item" v-for="(good, index) in goods" :key="good.name" :class="{current: index===currentIndex}">
+        <ul ref="leftUl">
+          <li class="menu-item" v-for="(good, index) in goods" :key="good.name" 
+            :class="{current: index===currentIndex}" @click="clickItem(index)">
             <span class="text bottom-border-1px">
               <img class="icon" :src="good.icon" v-if="good.icon">
               {{good.name}}
@@ -59,28 +60,38 @@
       ...mapState(['goods']),
       currentIndex () {
         const {scrollY, tops} = this
-        return tops.findIndex((top, index) => scrollY>=top && scrollY<tops[index+1])
+        const index = tops.findIndex((top, index) => scrollY>=top && scrollY<tops[index+1])
+        if(index !== this.index && this.leftScroll){
+          this.index = index
+          const li = this.$refs.leftUl.children[index]
+          this.leftScroll.scrollToElement(li, 300)
+        }
+        return index
       }
     },
     methods:{
-      initScroll () {
-        new BScroll(this.$refs.left, {})
-        const rightScroll = new BScroll(this.$refs.right, {
-          probeType: 1,   
+      _initScroll () {
+        this.leftScroll = new BScroll(this.$refs.left, {
+          click:true
         })
 
-        rightScroll.on('scroll', ({x, y}) => {
+        this.rightScroll = new BScroll(this.$refs.right, {
+          probeType: 1, 
+          click:true  
+        })
+
+        this.rightScroll.on('scroll', ({x, y}) => {
           console.log('scroll', x, y)
           this.scrollY = Math.abs(y)
         })
 
-        rightScroll.on('scrollEnd', ({x, y}) => {
+        this.rightScroll.on('scrollEnd', ({x, y}) => {
           console.log('scrollEnd', x, y)
           this.scrollY = Math.abs(y)
         })
       },
       
-      initTops () {
+      _initTops () {
         const tops = []
         let top = 0
         tops.push(top)
@@ -91,14 +102,21 @@
         })
         // 更新tops数据
         this.tops = tops
+      },
+
+      clickItem(index){
+        const top = this.tops[index]
+        this.scrollY = top
+        this.rightScroll.scrollTo(0,-top,300)
+
       }
 
     },
     watch: {
       goods () { // goods数据有了
         this.$nextTick(() => {// 列表数据显示了
-          this.initScroll()
-          this.initTops()
+          this._initScroll()
+          this._initTops()
         })
       }
     }
