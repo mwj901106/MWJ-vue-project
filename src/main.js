@@ -1,6 +1,7 @@
 import Vue from "vue";
 import 'lib-flexible'
 import { Button } from 'mint-ui';
+import VueLazyload from 'vue-lazyload'
 
 import App from "./App.vue";
 import Header from "./components/Header/Header.vue";
@@ -12,6 +13,11 @@ import './validate'
 import * as API from '@/api'
 import i18n from './i18n'
 import './mock/mock-server'
+import loading from '../src/common/images/loading.gif'
+
+Vue.use(VueLazyload, {
+  loading,  // 在要显示的图片没有加载到前显示
+})
 
 Vue.prototype.$API = API
 
