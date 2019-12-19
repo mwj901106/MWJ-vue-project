@@ -5,7 +5,8 @@ import {
   RECEIVE_RATINGS,
   RECEIVE_GOODS,
   ADD_FOOD_COUNT,
-  REDUCE_FOOD_COUNT
+  REDUCE_FOOD_COUNT,
+  CLEAR_CART
 } from '../mutation-types'
 
 import {
@@ -21,6 +22,7 @@ export default {
     goods: [], // 商品列表
     ratings: [], // 商家评价列表
     info: {}, // 商家信息
+    cartFoods:[]
   },
   mutations:{
     [RECEIVE_INFO](state, {info}) {
@@ -38,14 +40,24 @@ export default {
       if(food.count){
         food.count++
       }else{
-        Vue.set(food,'count',1)
+        Vue.set(food,'count',1),
+        state.cartFoods.push(food)
       }
     },
     [REDUCE_FOOD_COUNT](state,{food}){
       if(food.count>0){
         food.count--
+        if(food.count === 0){
+          state.cartFoods.splice(state.cartFoods.indexOf(food),1)
+        }
       }
+    },
+
+    [CLEAR_CART](state){
+      state.cartFoods.forEach(food => food.count = 0)
+      state.cartFoods = []
     }
+   
   },
   actions:{
     
@@ -90,5 +102,14 @@ export default {
       }
     }
   },
-  getters:{}
+  getters:{
+    totalCount (state) {
+      return state.cartFoods.reduce((pre, food) => pre + food.count, 0)
+    },
+    /* 总价格 */
+    totalPrice (state) {
+      return state.cartFoods.reduce((pre, food) => pre + food.count*food.price, 0)
+    },
+
+  }
 }
