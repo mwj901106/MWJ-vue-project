@@ -34,7 +34,7 @@
       </div>
       <div class="shop_container">
         <ul class="shop_list" v-if="shops.length>0">
-          <li class="shop_li border-1px" v-for="shop in shops" :key="shop.id" @click="$router.replace('/shop')">
+          <li class="shop_li border-1px" v-for="shop in shops" :key="shop.id" @click="$router.push(`/shop/${shop.id}`)">
             <a>
               <div class="shop_left">
                 <img class="shop_img" :src="'https://fuss10.elemecdn.com' + shop.image_path">
@@ -58,7 +58,7 @@
                     </div>
                   </section>
                   <section class="shop_rating_order_right">
-                    <span class="delivery_style delivery_right">{{shop.delivery_mode.text}}</span>
+                    <span class="delivery_style delivery_right">外卖专送</span>
                   </section>
                 </section>
                 <section class="shop_distance">

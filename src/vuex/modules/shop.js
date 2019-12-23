@@ -6,26 +6,33 @@ import {
   RECEIVE_GOODS,
   ADD_FOOD_COUNT,
   REDUCE_FOOD_COUNT,
-  CLEAR_CART
+  CLEAR_CART,
+  RECEIVE_SHOP
 } from '../mutation-types'
 
 import {
-  reqGoods,
-  reqRatings,
-  reqInfo
+  // reqGoods,
+  // reqRatings,
+  // reqInfo
+  reqShop,
 } from '@/api'
 
 import Vue from "vue";
 
+import {getCartFoods} from '@/utils'
+
+
+
 export default {
   state:{
-    goods: [], // 商品列表
+    /* goods: [], // 商品列表
     ratings: [], // 商家评价列表
-    info: {}, // 商家信息
+    info: {}, // 商家信息 */
+    shop: {},
     cartFoods:[]
   },
   mutations:{
-    [RECEIVE_INFO](state, {info}) {
+    /* [RECEIVE_INFO](state, {info}) {
       state.info = info
     },
     
@@ -35,6 +42,11 @@ export default {
     
     [RECEIVE_GOODS](state, {goods}) {
       state.goods = goods
+    }, */
+
+    [RECEIVE_SHOP] (state, {shop={}, cartFoods=[]}) {
+      state.shop = shop
+      state.cartFoods = cartFoods
     },
     [ADD_FOOD_COUNT](state,{food}){
       if(food.count){
@@ -62,7 +74,7 @@ export default {
   actions:{
     
     // 异步获取商家信息
-    async getShopInfo({commit}, cb) {
+    /* async getShopInfo({commit}, cb) {
       const result = await reqInfo()
       if(result.code===0) {
         const info = result.data
@@ -91,6 +103,30 @@ export default {
         commit(RECEIVE_GOODS, {goods})
         // 如果组件中传递了接收消息的回调函数, 数据更新后, 调用回调通知调用的组件
         typeof cb==='function' && cb()
+      }
+    }, */
+
+    async getShop({commit, state}, id) {
+     
+      // 如果指定id与原有的商家id相同, 不需要发请求
+      if (id==state.shop.id) {
+        return
+      }
+
+      // 当前显示的是另一个商家, 清除原本的数据
+      if (state.shop.id) {
+        commit(RECEIVE_SHOP, {}) // 空容器中不带shop对象
+      }
+      // console.log('准备发请求')
+      
+      // 发请求获取对应商家并更新数据
+      const result = await reqShop(id)
+      if(result.code===0) {
+        const shop = result.data
+        // 读取得到当前商家的购物车food数组
+        const cartFoods = getCartFoods(shop)
+
+        commit(RECEIVE_SHOP, {shop, cartFoods})
       }
     },
   

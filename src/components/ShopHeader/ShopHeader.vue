@@ -20,7 +20,7 @@
           <span class="shop-message-detail">{{info.score}}</span>
           <span class="shop-message-detail">月售{{info.sellCount}}单</span>
           <span class="shop-message-detail">
-            {{info.description}}
+            外卖专送
             <span>约{{info.deliveryTime}}分钟</span>
           </span>
           <span class="shop-message-detail">距离{{info.distance}}</span>
@@ -68,7 +68,7 @@
               <p>月售</p>
             </li>
             <li>
-              <h3>硅谷专送</h3>
+              <h3>外卖专送</h3>
               <p>约{{info.deliveryTime}}分钟</p>
             </li>
             <li>
@@ -125,9 +125,8 @@
     },
 
     computed: {
-      // ...mapState(['info'])
       ...mapState({
-        info: state => state.shop.info
+        info: state => state.shop.shop.info || {}
       })
     }
   }

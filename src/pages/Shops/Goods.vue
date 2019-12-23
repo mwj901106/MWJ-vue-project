@@ -65,7 +65,7 @@
     computed: {
       // ...mapState(['goods']),
       ...mapState({
-        goods: state => state.shop.goods
+       goods: state => state.shop.shop.goods || []
       }),
       currentIndex () {
         const {scrollY, tops} = this
