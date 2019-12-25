@@ -6,7 +6,7 @@ import moment from 'moment'
 Vue.filter('date-format', function (value, formatStr='YYYY-MM-DD HH:mm:ss') {
   return moment(value).format(formatStr)
 })
-
-// Vue.filter('date-format2', function (value, formatStr='yyyy-MM-dd kk:mm:ss') {
-//   return format(value, formatStr)
-// })
+/* 
+Vue.filter('date-format2', function (value, formatStr='yyyy-MM-dd kk:mm:ss') {
+  return format(value, formatStr)
+}) */

@@ -146,6 +146,10 @@ export default {
     totalPrice (state) {
       return state.cartFoods.reduce((pre, food) => pre + food.count*food.price, 0)
     },
+    positiveSize (state) {
+      const ratings = state.shop.ratings
+      return !ratings ? 0 : ratings.reduce((total, rating) => total + (rating.rateType===0 ? 1 : 0), 0)
+    }
 
   }
 }
